@@ -29,6 +29,9 @@ const { ...rest } = Astro.props;
 			<button
 				id="4bslnEILZE99V1gYGe2xr"
 				type="button"
+				aria-label={currentLanguage === "français"
+					? "copié email"
+					: "copy email"}
 				class="border border-border/30 h-[33px] md:h-[42px] bg-card px-3 py-2 rounded-lg text-sm ml-auto flex group gap-1 items-center ease-in duration-100 transition-colors hover:cursor-pointer">
 				<Copy class="size-3.5 group-hover:text-focus-hover" />
 				<p
@@ -42,6 +45,9 @@ const { ...rest } = Astro.props;
 				selectLabel="language switcher select"
 				id={"LC8M_xs21q0qFHjw2XhBi0z9"}>
 				<SelectTrigger
+					aria-label={currentLanguage === "français"
+						? "changer la langue"
+						: "change language"}
 					class="text-sm h-[33px] md:h-[42px] md:text-base ease-in duration-100 transition-colors hover:cursor-pointer hover:bg-card-hover group border border-border/30 bg-card px-3 py-2 rounded-lg flex justify-between items-center gap-1">
 					<Languages
 						className="text-focus size-3.5 md:size-4 group-hover:text-focus-hover"
