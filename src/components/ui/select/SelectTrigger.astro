@@ -1,0 +1,13 @@
+---
+const props = Astro.props;
+---
+
+<select-trigger>
+	<button
+		{...props}
+		type="button"
+		aria-haspopup="listbox"
+		aria-expanded="false">
+		<slot />
+	</button>
+</select-trigger>

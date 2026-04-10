@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from "astro";
+import { Font } from "astro:assets";
+import RootLayout from "@/layouts/RootLayout.astro";
+import { render } from "astro:content";
+import { getStaticContent } from "@/lib/utils/get-static-content";
+import Blog from "@/components/Blog.astro";
+
+export const getStaticPaths = (async () => {
+	return await getStaticContent("blogs");
+}) satisfies GetStaticPaths;
+
+const title = "Othmane Bks | " + Astro.params.slug;
+const { Content } = await render(Astro.props.content);
+---
+
+<RootLayout title={title}>
+	<Font slot="head" cssVariable="--font-mono" />
+	<Blog
+		title={Astro.props.content.data.title}
+		formattedDate={Astro.props.content.data.date}
+		date={Astro.props.content.data.structuredDate}>
+		<Content />
+	</Blog>
+</RootLayout>

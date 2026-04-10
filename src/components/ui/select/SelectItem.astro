@@ -1,0 +1,17 @@
+---
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	value: string;
+	isDefault?: boolean;
+}
+
+const { value, isDefault, ...rest } = Astro.props;
+---
+
+<select-item
+	{...rest}
+	role="option"
+	aria-selected="false"
+	data-prop-value={value}
+	data-prop-is-default={isDefault ? "true" : undefined}>
+	<slot />
+</select-item>

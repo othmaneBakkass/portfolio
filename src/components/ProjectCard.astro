@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+import cardHaze from "@/lib/images/card-haze.svg";
+import LinkIcon from "./icons/LinkIcon.astro";
+
+interface Props {
+	label: string;
+	description: string;
+	link: string;
+}
+
+const { label, description, link } = Astro.props;
+---
+
+<a
+	href={link}
+	class="relative bg-background/10 group hover:cursor-pointer isolate gap-2 w-full overflow-hidden max-w-95 min-h-66 shadow-inner-card p-4 rounded-lg md:rounded-2xl flex flex-col justify-end items-start">
+	<p class="text-focus-variant text-sm md:text-base font-medium">{label}</p>
+	<p class="text-sm md:text-base">{description}</p>
+	<LinkIcon
+		aria-hidden
+		className="text-body/50 group-hover:text-link ease-in-out transition-colors duration-300 -z-10 absolute top-5 right-5"
+	/>
+	<Image
+		class={"absolute top-0 right-0 -z-20"}
+		src={cardHaze}
+		aria-hidden
+		alt={"a blueish haze"}
+		width={"365"}
+		height={"208"}
+	/>
+</a>

@@ -1,0 +1,22 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+
+const currentLocale = Astro.currentLocale;
+const { ...rest } = Astro.props;
+---
+
+<section
+	{...rest}
+	id="projects"
+	class="mt-8 md:mt-12 w-full max-w-[calc(100%-40px)] mx-auto md:max-w-2xl">
+	<h2 class="text-heading text-base md:text-lg mb-6">
+		{currentLocale === "en" ? "Recent Projects" : "Projets récents"}
+	</h2>
+	<ProjectCard
+		link="https://github.com/othmaneBakkass/cv_gen"
+		label="cv_gen"
+		description={currentLocale === "en"
+			? "A Golang-based CLI tool that generates PDF resumes from a JSON file using a predefined template."
+			: "Un outil CLI en Go qui génère des CV PDF à partir d'un fichier JSON en utilisant un template prédéfini."}
+	/>
+</section>

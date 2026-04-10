@@ -1,0 +1,42 @@
+---
+import { Image } from "astro:assets";
+import BlogContainer from "./BlogContainer.astro";
+import Footer from "./Footer.astro";
+import topFog from "@/lib/images/fog_top.svg";
+import bottomFog from "@/lib/images/fog_bottom.svg";
+
+interface Props {
+	date: string;
+	formattedDate: string;
+	title: string;
+}
+---
+
+<>
+	<BlogContainer data-animate-entry style="--i:1">
+		<time class="text-muted text-sm" datetime={Astro.props.date}
+			>{Astro.props.formattedDate}</time
+		>
+		<h1>{Astro.props.title}</h1>
+		<slot />
+		<div
+			aria-hidden
+			class="w-full bg-linear-to-b from-transparent to-background sticky bottom-0 h-12">
+		</div>
+	</BlogContainer>
+	<Footer data-animate-entry style="--i:2" />
+	<Image
+		class={"absolute top-0 left-0 -z-20 fade-in"}
+		src={topFog}
+		aria-hidden
+		alt={"a blueish fog"}
+		width={"550"}
+	/>
+	<Image
+		class={"absolute bottom-0 right-0 -z-20 fade-in"}
+		src={bottomFog}
+		aria-hidden
+		alt={"a blueish fog"}
+		width={"550"}
+	/>
+</>

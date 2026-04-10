@@ -1,0 +1,54 @@
+---
+import { constants } from "@/lib/utils/constants";
+import ExternalLink from "./icons/ExternalLink.astro";
+
+const currentLocale = Astro.currentLocale;
+const resumePath = currentLocale === "en" ? "./cv-eng.pdf" : "./cv-fr.pdf";
+
+const { ...rest } = Astro.props;
+
+const links = [
+	{
+		label: currentLocale === "en" ? "resume" : "cv",
+		url: resumePath,
+		type: "relative",
+	},
+	{
+		label: "github",
+		url: constants.github,
+		type: "absolute",
+	},
+];
+---
+
+<footer
+	{...rest}
+	class="w-full max-w-[calc(100%-40px)] mx-auto md:max-w-2xl mt-12 py-5 flex text-sm items-center justify-start border-t border-border gap-3">
+	{
+		links.map((el) => (
+			<a
+				data-footer-link-type={el.type}
+				href={el.url}
+				class="active:scale-[98%] ease-in duration-100 transition-[colors,scale] hover:text-link flex items-center justify-between gap-1 border-b border-body hover:border-link">
+				<span class="">{el.label}</span>
+				<ExternalLink className="size-3.5" />
+			</a>
+		))
+	}
+</footer>
+
+<script>
+	document
+		.querySelectorAll("a[data-footer-link-type='relative']")
+		.forEach((link) => {
+			if (link instanceof HTMLAnchorElement === false) {
+				return;
+			}
+
+			const originalHref = link.getAttribute("href");
+			if (originalHref && originalHref.startsWith(".")) {
+				const resolvedUrl = new URL(originalHref, window.location.origin).href;
+				link.href = resolvedUrl;
+			}
+		});
+</script>

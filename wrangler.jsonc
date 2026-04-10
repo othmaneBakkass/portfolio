@@ -1,0 +1,8 @@
+{
+	"name": "portfolio",
+	"compatibility_date": "2026-04-10", // Update to the day you deploy
+	"assets": {
+		"directory": "./dist",
+		"not_found_handling": "404-page"
+	}
+}

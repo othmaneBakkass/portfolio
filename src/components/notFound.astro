@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets";
+import topFog from "@/lib/images/fog_top.svg";
+import LinkIcon from "./icons/LinkIcon.astro";
+const currentLocale = Astro.currentLocale;
+const url = new URL(
+	currentLocale === "fr" ? "fr" : "",
+	Astro.url.protocol + "//" + Astro.url.host,
+);
+---
+
+<style is:global>
+	body {
+		padding: 0;
+	}
+</style>
+
+<>
+	<section
+		class="relative overflow-hidden grid-cols-1 grid-rows-1 h-dvh w-full grid items-center content-center justify-center">
+		<div
+			class="flex flex-col items-start mx-auto w-full max-w-[calc(100%-40px)] md:max-w-2xl px-5 justify-center gap-3">
+			<h1 class="capitalize text-xl md:text-3xl font-medium text-heading">
+				{
+					currentLocale === "fr"
+						? "404 : Page introuvable"
+						: "404: Page Not Found"
+				}
+			</h1>
+			<div>
+				<p class="md:text-base text-sm">
+					{
+						currentLocale === "fr"
+							? "Le lien que vous avez suivi est peut-être rompu ou la page a peut-être été déplacée."
+							: "The link you followed might be broken or the page may have been moved."
+					}
+				</p>
+				<a
+					href={url.toString()}
+					class="active:scale-[98%] group w-fit mt-1 ease-in duration-100 transition-[colors,scale] hover:text-link flex items-center justify-between gap-1 border-b border-body hover:border-link">
+					<LinkIcon aria-hidden className="group-hover:text-link size-3.5" />
+					<span>
+						{currentLocale === "fr" ? "Retourner à l'accueil" : "Go back home"}
+					</span>
+				</a>
+			</div>
+		</div>
+		<Image
+			class={"absolute top-0 left-0 h-dvh -z-20 fade-in"}
+			src={topFog}
+			aria-hidden
+			alt={"a blueish fog"}
+		/>
+	</section>
+</>

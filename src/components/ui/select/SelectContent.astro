@@ -1,0 +1,8 @@
+---
+interface Props extends astroHTML.JSX.HTMLAttributes {}
+const props = Astro.props;
+---
+
+<select-content {...props} role="listbox" aria-hidden="true">
+	<slot />
+</select-content>

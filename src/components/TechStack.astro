@@ -1,0 +1,197 @@
+---
+import ChevronDown from "./icons/ChevronDown.astro";
+
+const currentLocale = Astro.currentLocale;
+const { ...rest } = Astro.props;
+
+const stacks = [
+	{
+		label: { en: "My main tech stack", fr: "Ma stack principale" },
+		items: [
+			{
+				label: "frontend",
+				items: [
+					"react",
+					"typescript",
+					"react router",
+					"tanstack query",
+					"shadcn/ui",
+					"zustand",
+					"zod",
+				],
+			},
+			{
+				label: "backend",
+				items: [
+					"nodejs",
+					"typescript",
+					"honojs",
+					"prisma",
+					"postgres",
+					"redis",
+					"zod",
+				],
+			},
+		],
+	},
+	{
+		label: { en: "Tech I'm familiar with", fr: "Technologies que je connais" },
+		items: [
+			{
+				label: "frontend",
+				items: ["nextjs", "angular", "redux toolkit", "clerk"],
+			},
+			{
+				label: "backend",
+				items: ["c#", "asp.net", "expressjs", "adonisjs", "mysql", "rabbitmq"],
+			},
+			{
+				label: "devops",
+				items: ["docker", "linux", "github actions"],
+			},
+		],
+	},
+];
+---
+
+<style>
+	summary::marker {
+		display: none; /* Standard way (though display: none isn't universally supported in ::marker yet) */
+		content: ""; /* Alternative standard way */
+	}
+
+	summary::-webkit-details-marker {
+		display: none; /* Specifically for WebKit browsers like Chrome and Safari */
+	}
+
+	#techStack:has([data-details="tech_stack"]:hover)
+		[data-details="tech_stack"]:not(:hover) {
+		opacity: 0.5;
+		transition: opacity 0.3s ease-in-out;
+	}
+</style>
+
+<section
+	{...rest}
+	id="techStack"
+	class="mt-8 md:mt-6 w-full max-w-[calc(100%-40px)] mx-auto md:max-w-2xl flex flex-col items-center justify-start gap-4">
+	{
+		stacks.map((j, index) => (
+			<>
+				<details
+					data-details="tech_stack"
+					class="w-full shadow-inner-card bg-background/10 border-border/50 md:border-transparent border  rounded-2xl">
+					<summary class="p-5 ease-in duration-100 transition-colors hover:cursor-pointer hover:text-focus list-none flex items-center justify-between">
+						<span class="text-sm font-medium">
+							{currentLocale === "en" ? j.label.en : j.label.fr}
+						</span>
+						<ChevronDown className="size-4" />
+					</summary>
+					<div data-details-body="tech_stack" class="grid grid-rows-[0fr]">
+						<div class="overflow-hidden min-h-0">
+							<div class="w-full flex flex-col gap-3 pb-5 px-5 items-center">
+								{j.items.map((el) => (
+									<div class="w-full">
+										<p class="text-focus-variant text-sm capitalize">
+											{el.label}
+										</p>
+										<ul class="flex w-full flex-wrap items-center justify-start gap-3">
+											{el.items.map((i) => (
+												<li class="text-sm">{i}</li>
+											))}
+										</ul>
+									</div>
+								))}
+							</div>
+						</div>
+					</div>
+				</details>
+				{(index + 1) % 2 !== 0 && <hr class="text-border w-full h-1" />}
+			</>
+		))
+	}
+</section>
+
+<script>
+	import { animateChevron } from "@/lib/utils/animate-chevron";
+
+	const animations = new WeakMap<HTMLDetailsElement, Animation>();
+	const DURATION = 400;
+
+	function animateOpen(el: HTMLDetailsElement, wrapper: Element) {
+		animations.get(el)?.cancel();
+		el.open = true;
+
+		const chevron = el.querySelector("summary svg");
+		if (chevron) animateChevron(chevron, 0, 180);
+
+		const anim = wrapper.animate(
+			[{ gridTemplateRows: "0fr" }, { gridTemplateRows: "1fr" }],
+			{ duration: DURATION, easing: "cubic-bezier(0.22, 1, 0.36, 1)" },
+		);
+
+		animations.set(el, anim);
+		anim.onfinish = () => {
+			(wrapper as HTMLElement).style.gridTemplateRows = "1fr";
+			anim.cancel();
+		};
+	}
+
+	function animateClose(el: HTMLDetailsElement, wrapper: Element) {
+		animations.get(el)?.cancel();
+
+		(wrapper as HTMLElement).style.gridTemplateRows = "1fr";
+
+		const chevron = el.querySelector("summary svg");
+		if (chevron) animateChevron(chevron, 180, 0);
+
+		const anim = wrapper.animate(
+			[{ gridTemplateRows: "1fr" }, { gridTemplateRows: "0fr" }],
+			{ duration: DURATION, easing: "cubic-bezier(0.61, 1, 0.88, 1)" },
+		);
+
+		animations.set(el, anim);
+		el.classList.add("is-closing");
+
+		anim.onfinish = () => {
+			(wrapper as HTMLElement).style.gridTemplateRows = "";
+			anim.cancel();
+			el.open = false;
+			el.classList.remove("is-closing");
+		};
+	}
+	const allDetails = document.querySelectorAll("[data-details='tech_stack']");
+	function closeSiblings(current: HTMLDetailsElement) {
+		allDetails.forEach((el) => {
+			if (
+				el === current ||
+				el instanceof HTMLDetailsElement === false ||
+				!el.open ||
+				el.classList.contains("is-closing")
+			)
+				return;
+			const wrapper = el.querySelector("[data-details-body='tech_stack']");
+			if (wrapper) animateClose(el, wrapper);
+		});
+	}
+
+	allDetails.forEach((el) => {
+		if (el instanceof HTMLDetailsElement === false) {
+			return;
+		}
+		const summary = el.querySelector("summary");
+		const wrapper = el.querySelector("[data-details-body='tech_stack']");
+		if (!wrapper) {
+			return;
+		}
+		summary?.addEventListener("click", (e) => {
+			e.preventDefault();
+			if (el.open) {
+				animateClose(el, wrapper);
+			} else {
+				closeSiblings(el);
+				animateOpen(el, wrapper);
+			}
+		});
+	});
+</script>

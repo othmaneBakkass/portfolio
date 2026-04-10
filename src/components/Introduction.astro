@@ -1,0 +1,52 @@
+---
+import { constants } from "@/lib/utils/constants";
+import ExternalLink from "./icons/ExternalLink.astro";
+
+const currentLocale = Astro.currentLocale;
+const resumePath = currentLocale === "en" ? "./cv-eng.pdf" : "./cv-fr.pdf";
+
+const { ...rest } = Astro.props;
+
+const links = [
+	{
+		label: currentLocale === "en" ? "resume" : "cv",
+		url: resumePath,
+	},
+	{
+		label: "github",
+		url: constants.github,
+	},
+];
+---
+
+<section
+	{...rest}
+	id="aboutMe"
+	class="mt-12 md:mt-9 w-full max-w-[calc(100%-40px)] mx-auto md:max-w-2xl">
+	<p class="text-sm md:text-base">
+		{
+			currentLocale === "en"
+				? "Hey I'm Othmane a full-stack dev based in Morocco. I mostly work on web apps and I enjoy working with new tech as well as watching software grow and improve over time."
+				: "Salut, je suis Othmane, un développeur full-stack basé au Maroc. Je travaille principalement sur des applications web et j'apprécie de travailler avec les nouvelles technologies ainsi que de voir les logiciels grandir et s'améliorer au fil du temps."
+		}
+	</p>
+	<p class="text-sm md:text-base mt-2">
+		{
+			currentLocale === "en"
+				? "Outside of programming, I'm interested in working out, farming,self-hosting, comics and tech."
+				: "En dehors de la programmation, je m'intéresse à la musculation, à l'agriculture, à l'auto-hébergement, aux comics et à la technologie."
+		}
+	</p>
+	<div class="mt-3 flex w-min text-sm items-center justify-between gap-3">
+		{
+			links.map((el) => (
+				<a
+					href={el.url}
+					class="active:scale-[98%] ease-in duration-100 transition-[colors,scale] hover:text-link flex items-center justify-between gap-1 border-b border-body hover:border-link">
+					<span class="">{el.label}</span>
+					<ExternalLink className="size-3.5" />
+				</a>
+			))
+		}
+	</div>
+</section>

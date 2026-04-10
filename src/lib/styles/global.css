@@ -1,0 +1,55 @@
+html {
+	scrollbar-gutter: stable;
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-border) var(--color-background);
+
+	&::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: var(--color-background);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: var(--color-border);
+		border-radius: 999px;
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background: var(--color-muted);
+	}
+}
+
+pre {
+	padding: 12px;
+	border-radius: 12px;
+	font-size: 14px;
+
+	&:is(*) {
+		font-family: var(--font-mono);
+	}
+}
+
+@keyframes fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.stagger-container {
+	--stagger: 0.1s;
+}
+.stagger-container > [data-animate-entry] {
+	opacity: 0;
+	animation: fade 0.5s ease-in forwards;
+	animation-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+.fade-in {
+	opacity: 0;
+	animation: fade 0.5s ease-in forwards;
+}

@@ -1,0 +1,27 @@
+---
+import { getCollection } from "astro:content";
+import BlogCard from "./BlogCard.astro";
+
+const currentLocale = Astro.currentLocale;
+const { ...rest } = Astro.props;
+const collectionName = currentLocale === "en" ? "blogs" : "blogs_fr";
+const collection = await getCollection(collectionName);
+---
+
+<section
+	{...rest}
+	id="writings"
+	class="my-8 md:my-12 w-full max-w-[calc(100%-40px)] mx-auto md:max-w-2xl">
+	<h2 class="text-heading text-base md:text-lg mb-6">
+		{currentLocale === "en" ? "Writings" : "Mes écrits"}
+	</h2>
+	{
+		collection.map((el) => (
+			<BlogCard
+				title={el.data.title}
+				date={el.data.date}
+				url={"./b/" + el.id}
+			/>
+		))
+	}
+</section>

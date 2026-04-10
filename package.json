@@ -6,9 +6,22 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
-    "astro": "^5.17.1"
+    "@astrojs/cloudflare": "^13.1.8",
+    "@tailwindcss/vite": "^4.2.1",
+    "astro": "^6.1.5",
+    "rehype-add-classes": "^1.0.0",
+    "tailwindcss": "^4.2.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "sharp": "^0.34.5",
+    "wrangler": "^4.81.1"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }

@@ -1,0 +1,9 @@
+---
+const { ...rest } = Astro.props;
+---
+
+<article
+	{...rest}
+	class="w-full relative prose prose-sm md:prose-base prose-em:text-focus-variant prose-invert prose-strong:font-medium prose-h4:font-medium prose-h3:font-medium prose-pre:rounded-xl prose-dark max-w-[calc(100%-40px)] mx-auto md:max-w-2xl mt-5 md:mt-36">
+	<slot />
+</article>

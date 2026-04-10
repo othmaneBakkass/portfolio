@@ -1,0 +1,25 @@
+---
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	selectLabel: string;
+	isOpen?: boolean;
+	selectedValue?: string | null;
+	activeIndex?: number;
+}
+
+const {
+	selectLabel,
+	isOpen = false,
+	selectedValue = null,
+	activeIndex = 0,
+	...rest
+} = Astro.props;
+---
+
+<select-root
+	data-prop-select-label={selectLabel}
+	data-prop-is-open={String(isOpen)}
+	data-prop-selected-value={selectedValue ?? ""}
+	data-prop-active-index={String(activeIndex)}
+	{...rest}>
+	<slot />
+</select-root>

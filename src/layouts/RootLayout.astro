@@ -1,0 +1,23 @@
+---
+import "@/lib/styles/global.css";
+import "@/lib/styles/tailwind.css";
+import { Font } from "astro:assets";
+
+const { title } = Astro.props;
+---
+
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<title>{title}</title>
+		<slot name="head" />
+		<Font cssVariable="--font-inter" preload />
+	</head>
+	<body class="relative" id="root">
+		<main class="w-full h-full stagger-container">
+			<slot />
+		</main>
+	</body>
+</html>

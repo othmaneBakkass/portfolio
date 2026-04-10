@@ -1,0 +1,58 @@
+@import "tailwindcss";
+@plugin '@tailwindcss/typography';
+
+@theme inline {
+	--color-body: #cdd6f4;
+	--color-heading: #b4befe;
+	--color-focus: #f2cdcd;
+	--color-focus-hover: hsl(0, 59%, 82%);
+	--color-focus-variant: #cba6f7;
+	--color-card: #181825;
+	--color-card-hover: hsl(240, 22%, 15%);
+	--color-border: #313244;
+	--color-border-elevated: #212132;
+	--color-muted: hsl(240, 19%, 60%);
+	--color-background: #11111b;
+	--color-link: #94e2d5;
+
+	--shadow-inner-card: inset 0 0 20px 0 hsl(240, 20%, 16%);
+
+	--font-sans:
+		"SF Pro Text", "SF Pro Display", "SF Pro", "Helvetica Neue",
+		var(--font-inter), sans-serif;
+
+	--font-cursive: var(--font-carattere), cursive;
+}
+
+@layer base {
+	* {
+		@apply font-sans;
+	}
+
+	html {
+		@apply min-h-dvh w-full scroll-smooth;
+	}
+
+	body {
+		@apply p-1 bg-background text-body min-h-dvh h-full w-full;
+	}
+}
+
+@utility prose-dark {
+	--tw-prose-invert-body: var(--color-body);
+	--tw-prose-invert-headings: var(--color-heading);
+	--tw-prose-invert-lead: var(--color-body);
+	--tw-prose-invert-links: var(--color-link);
+	--tw-prose-invert-bold: var(--color-focus-variant);
+	--tw-prose-invert-counters: var(--color-body);
+	--tw-prose-invert-bullets: var(--color-body);
+	--tw-prose-invert-hr: var(--color-border);
+	--tw-prose-invert-quotes: var(--color-body);
+	--tw-prose-invert-quote-borders: var(--color-border-elevated);
+	--tw-prose-invert-captions: var(--color-focus);
+	--tw-prose-invert-code: var(--color-focus);
+	--tw-prose-invert-pre-code: var(--color-body);
+	--tw-prose-invert-pre-bg: rgb(0 0 0 / 50%);
+	--tw-prose-invert-th-borders: var(--color-border);
+	--tw-prose-invert-td-borders: var(--color-border);
+}
